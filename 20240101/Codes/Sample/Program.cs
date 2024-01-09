@@ -1,3 +1,10 @@
-﻿string[] d  = args[0].Split('-');
-string r = d[2] + "/" + d[0] + "/" + d[1];
-Console.WriteLine(r);
+﻿using System.Reactive.Linq;
+
+Observable.Start(() => args[0])
+    .SelectMany(x => x.Split("-"))
+    .ToList()
+    .Select(x => string.Join("/", x[2], x[0], x[1]))
+    .Subscribe(x =>
+    {
+        Console.WriteLine(x);
+    });
